@@ -15,6 +15,8 @@ import java.util.Properties;
 
 /**
  *  We can configure persistence.xml directly if we have any inside project.
+ *  JPAConfig file contains information about DataSource, JDBC Connection and Hibernate properties.
+ *  This file is same as persistence.xml 
  */
 
 @Configuration
