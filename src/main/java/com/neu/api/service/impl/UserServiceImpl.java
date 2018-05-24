@@ -6,6 +6,7 @@ import com.neu.api.exception.NotFoundException;
 import com.neu.api.repository.UserRepository;
 import com.neu.api.service.UserService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<User> findAll( ) {
         return repository.findAll();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User findOne(String id) {
         User existing = repository.findOne(id);
         if(existing == null){
@@ -33,6 +36,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User create(User user) {
         User existing = repository.findByEmail(user.getEmail());
         if(existing != null){
@@ -42,20 +46,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public User update(String id, User user) {
         User existing = repository.findOne(id);
         if(existing == null){
             throw new NotFoundException("User with id " + id + " does not exist");
         }
-        return repository.update(id, user);
+        return repository.update(user);
     }
 
     @Override
+    @Transactional
     public void delete(String id) {
         User existing = repository.findOne(id);
         if(existing == null){
             throw new NotFoundException("User with id " + id + " does not exist");
         }
-        repository.delete(id);
+        repository.delete(existing);
     }
 }

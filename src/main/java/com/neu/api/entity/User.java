@@ -1,11 +1,26 @@
 package com.neu.api.entity;
 
+import javax.persistence.*;
+import java.util.UUID;
+
+@Entity
+@NamedQueries({
+        @NamedQuery(name = "User.findByEmail", query = "SELECT u from User u where u.email=:pEmail"),
+        @NamedQuery(name = "User.findAll", query = "SELECT u from User u ORDER BY u.firstName")
+})
 public class User {
+    @Id
     private String id;
     private String firstName;
     private String lastName;
+
+    @Column(unique = true)
     private String email;
     private String city;
+
+    public User(){
+        this.id = UUID.randomUUID().toString();
+    }
 
     public String getId() {
         return id;
