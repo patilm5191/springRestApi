@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -23,21 +24,21 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         TypedQuery<User> query = em.createNamedQuery("User.findByEmail", User.class);
         query.setParameter("pEmail", email);
         List<User> users = query.getResultList();
         if(!users.isEmpty()){
-            return users.get(0);
+            return Optional.of(users.get(0));
         } else {
-            return null;
+            return Optional.empty();
         }
     }
 
     @Override
-    public User findOne(String id) {
-        User user1 = em.find(User.class, id);
-        return user1;
+    public Optional<User> findOne(String id) {
+//        User user1 = em.find(User.class, id);
+        return Optional.ofNullable(em.find(User.class, id));
     }
 
     @Override
