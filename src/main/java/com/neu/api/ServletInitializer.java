@@ -7,7 +7,7 @@ public class ServletInitializer extends AbstractAnnotationConfigDispatcherServle
     // This will tell where are configuration classes
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {WebConfig.class, JPAConfig.class};
+        return new Class[] {WebConfig.class, JPAConfig.class, SwaggerConfig.class};
     }
 
     @Override
